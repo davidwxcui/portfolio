@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
           </h1>
           
           <p className="text-2xl md:text-4xl font-medium text-[#86868b] tracking-tight mb-8">
-            The ultimate computer science student.
+            The ultimate software engineer.
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-6 mt-4">
