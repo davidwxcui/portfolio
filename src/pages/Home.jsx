@@ -5,6 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import projectsData from '../data/projects.json';
+import CatGolf from '../components/CatGolf';
 
 const skills = {
   "Languages": ["Java", "Python", "C", "C++", "SQL", "JavaScript/TypeScript", "HTML/CSS", "Kotlin", "C#"],
@@ -70,26 +71,32 @@ const staggerContainer = {
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
 };
 
-const BentoCard = ({ children, sx, delay = 0 }) => (
-  <Box
-    component={motion.div}
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    whileHover={{ y: -8, scale: 1.01 }}
-    transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    sx={{
-      backgroundColor: 'rgba(255, 255, 255, 0.03)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255,255,255,0.05)',
-      borderRadius: '24px',
-      padding: { xs: 3, md: 5 },
-      height: '100%',
-      ...sx
-    }}
-  >
-    {children}
-  </Box>
-);
+const BentoCard = ({ children, sx, className = "", delay = 0 }) => {
+  const randRot = `${Math.random() > 0.5 ? '' : '-'}${Math.floor(Math.random() * 60) + 20}deg`;
+  const randX = `${Math.random() > 0.5 ? '' : '-'}${Math.floor(Math.random() * 30)}vw`;
+  return (
+    <Box
+      component={motion.div}
+      className={`chaos-target ${className}`}
+      style={{ '--random-rot': randRot, '--random-x': randX }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      whileHover={{ y: -8, scale: 1.01 }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255,255,255,0.05)',
+        borderRadius: '24px',
+        padding: { xs: 3, md: 5 },
+        height: '100%',
+        ...sx
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 
 const TYPE_WORDS = [
   "Software Engineer",
@@ -133,8 +140,10 @@ const TypingIntro = () => {
 };
 
 const Home = () => {
+  const [chaosMode, setChaosMode] = useState(false);
+
   return (
-    <Box sx={{ pb: 15, pt: { xs: 4, md: 8 } }}>
+    <Box sx={{ pb: 15, pt: { xs: 4, md: 8 }, overflowX: 'hidden' }}>
       <Container maxWidth="lg">
         
         {/* HERO: The Bento Grid */}
@@ -219,8 +228,10 @@ const Home = () => {
             {projectsData.map((project, idx) => (
               <motion.div key={project.id} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
                 <Paper 
+                  className="chaos-target"
                   component={motion.div}
                   whileHover={{ y: -8, scale: 1.01 }}
+                  style={{ '--random-rot': `${Math.random() > 0.5 ? '' : '-'}${Math.floor(Math.random() * 60) + 20}deg`, '--random-x': `${Math.random() > 0.5 ? '' : '-'}${Math.floor(Math.random() * 30)}vw` }}
                   sx={{ display: 'flex', flexDirection: { xs: 'column', md: idx % 2 === 0 ? 'row' : 'row-reverse' }, backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}
                 >
                   <Box sx={{ width: { xs: '100%', md: '50%' } }}>
@@ -322,6 +333,15 @@ const Home = () => {
         </Box>
 
       </Container>
+      
+      {/* Easter Egg Trigger */}
+      <Box sx={{ mt: 10, textAlign: 'center' }}>
+        <IconButton onClick={() => setChaosMode(true)} sx={{ opacity: 0.05, '&:hover': { opacity: 1 }, transition: 'opacity 0.3s' }}>
+          <span role="img" aria-label="golf">⛳</span>
+        </IconButton>
+      </Box>
+
+      {chaosMode && <CatGolf onReset={() => setChaosMode(false)} />}
     </Box>
   );
 };

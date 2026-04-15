@@ -77,3 +77,24 @@ html {
 .marquee-content:hover {
   animation-play-state: paused;
 }
+
+/* Cat Golf Physics Classes */
+.knocked-over {
+  transition: transform 1.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) !important;
+  transform: rotate(var(--random-rot, 45deg)) translateY(120vh) translateX(var(--random-x, 10vw)) !important;
+  pointer-events: none !important;
+  opacity: 0;
+  transition-property: transform, opacity !important;
+  transition-duration: 1.2s, 0.8s !important;
+  transition-delay: 0s, 0.4s !important;
+}
+
+@keyframes fly-across {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50vw, -40vh) scale(0.6); }
+  100% { transform: translate(120vw, 80vh) scale(1.2); }
+}
+
+.golf-ball-fly {
+  animation: fly-across 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
