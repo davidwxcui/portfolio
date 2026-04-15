@@ -66,7 +66,11 @@ const CatGolf = ({ onReset }) => {
           alignItems: 'flex-end'
         }}
       >
-        <span role="img" aria-label="cat" style={{ transform: 'scaleX(-1)' }}>🐈</span>
+        <img 
+          src={`${import.meta.env.BASE_URL}images/ragdoll.png`} 
+          alt="Ragdoll Cat" 
+          style={{ width: '200px', transform: 'scaleX(-1)', mixBlendMode: 'screen' }} 
+        />
         <Box 
           sx={{ 
             position: 'absolute', 
