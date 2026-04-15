@@ -52,39 +52,22 @@ const CatGolf = ({ onReset }) => {
 
   return (
     <Box sx={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999, overflow: 'hidden' }}>
-      {/* The Cat */}
+      {/* The Ragdoll Golfer Sprite */}
       <Box
         sx={{
           position: 'absolute',
           bottom: '10%',
           left: phase !== 'idle' ? '5%' : '-30%',
-          fontSize: '10rem',
-          transition: 'left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s ease-in',
-          transform: phase === 'swinging' ? 'rotate(-25deg)' : 'rotate(0deg)',
-          transformOrigin: 'bottom center',
-          display: 'flex',
-          alignItems: 'flex-end'
+          transition: 'left 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          mixBlendMode: 'screen',
+          width: { xs: '200px', md: '250px' },
+          height: { xs: '250px', md: '300px' },
+          backgroundImage: `url(${import.meta.env.BASE_URL}images/ragdoll_golf_sprite.png)`,
+          backgroundSize: '300% 100%',
+          backgroundPosition: phase === 'idle' ? '0% 0%' : phase === 'swinging' ? '50% 0%' : '100% 0%',
+          backgroundRepeat: 'no-repeat',
         }}
-      >
-        <img 
-          src={`${import.meta.env.BASE_URL}images/ragdoll.png`} 
-          alt="Ragdoll Cat" 
-          style={{ width: '200px', transform: 'scaleX(-1)', mixBlendMode: 'screen' }} 
-        />
-        <Box 
-          sx={{ 
-            position: 'absolute', 
-            right: '-60px', 
-            bottom: '20px', 
-            fontSize: '8rem', 
-            transform: phase === 'swinging' ? 'rotate(110deg)' : 'rotate(-20deg)', 
-            transformOrigin: 'bottom left', 
-            transition: 'transform 0.15s ease-in' 
-          }}
-        >
-          🏌️‍♂️
-        </Box>
-      </Box>
+      />
 
       {/* The Flying Golf Ball */}
       {phase === 'flying' && (
