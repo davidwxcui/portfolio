@@ -161,7 +161,7 @@ const Home = () => {
               <motion.div key={project.id} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
                 <Paper sx={{ display: 'flex', flexDirection: { xs: 'column', md: idx % 2 === 0 ? 'row' : 'row-reverse' }, backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}>
                   <Box sx={{ width: { xs: '100%', md: '50%' } }}>
-                    <Box component="img" src={project.image} sx={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '350px' }} />
+                    <Box component="img" src={`${import.meta.env.BASE_URL}${project.image.startsWith('/') ? project.image.slice(1) : project.image}`} sx={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '350px' }} />
                   </Box>
                   <Box sx={{ width: { xs: '100%', md: '50%' }, p: { xs: 4, md: 8 }, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <Typography variant="h3" sx={{ fontWeight: 800, mb: 2 }}>{project.title}</Typography>
