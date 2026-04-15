@@ -46,3 +46,34 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #444; 
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 16px)); }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  padding: 8px 0;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 32px;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  padding-left: 32px;
+}
+
+.marquee-content.reverse {
+  animation-direction: reverse;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}

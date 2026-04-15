@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Grid, Chip, Paper, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -75,6 +75,7 @@ const BentoCard = ({ children, sx, delay = 0 }) => (
     component={motion.div}
     initial={{ opacity: 0, scale: 0.95 }}
     animate={{ opacity: 1, scale: 1 }}
+    whileHover={{ y: -8, scale: 1.01 }}
     transition={{ duration: 0.5, delay, ease: "easeOut" }}
     sx={{
       backgroundColor: 'rgba(255, 255, 255, 0.03)',
@@ -90,6 +91,47 @@ const BentoCard = ({ children, sx, delay = 0 }) => (
   </Box>
 );
 
+const TYPE_WORDS = [
+  "Software Engineer",
+  "Backend Developer",
+  "Full-Stack Creator",
+  "Problem Solver"
+];
+
+const TypingIntro = () => {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [blink, setBlink] = useState(true);
+
+  useEffect(() => {
+    if (subIndex === TYPE_WORDS[index].length + 1 && !isDeleting) {
+      const timeout = setTimeout(() => setIsDeleting(true), 1500);
+      return () => clearTimeout(timeout);
+    }
+    if (subIndex === 0 && isDeleting) {
+      setIsDeleting(false);
+      setIndex((prev) => (prev + 1) % TYPE_WORDS.length);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, Math.max(isDeleting ? 50 : 100, parseInt(Math.random() * 50) + 50));
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, isDeleting]);
+
+  useEffect(() => {
+    const blinkTimeout = setInterval(() => setBlink((prev) => !prev), 500);
+    return () => clearInterval(blinkTimeout);
+  }, []);
+
+  return (
+    <Typography variant="body1" sx={{ color: '#0070f3', fontWeight: 600, mb: 2, letterSpacing: '0.1em', textTransform: 'uppercase', height: '24px' }}>
+      &gt; {TYPE_WORDS[index].substring(0, subIndex)}<span style={{ opacity: blink ? 1 : 0 }}>_</span>
+    </Typography>
+  );
+};
+
 const Home = () => {
   return (
     <Box sx={{ pb: 15, pt: { xs: 4, md: 8 } }}>
@@ -101,9 +143,7 @@ const Home = () => {
             {/* Top Left: Main Intro */}
             <Grid item xs={12} md={8}>
               <BentoCard delay={0.1} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <Typography variant="body1" sx={{ color: '#0070f3', fontWeight: 600, mb: 2, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Software Engineer
-                </Typography>
+                <TypingIntro />
                 <Typography variant="h1" sx={{ fontSize: { xs: '3.5rem', md: '5rem' }, fontWeight: 800, lineHeight: 1.05, mb: 3 }}>
                   David Cui.
                 </Typography>
@@ -138,22 +178,31 @@ const Home = () => {
               </Grid>
             </Grid>
 
-            {/* Bottom: Skills */}
+            {/* Bottom: Skills Marquee */}
             <Grid item xs={12}>
               <BentoCard delay={0.4} sx={{ p: { xs: 3, md: 5 } }}>
-                <Typography variant="h6" sx={{ mb: 4, fontWeight: 800 }}>Technical Arsenal</Typography>
-                <Grid container spacing={4}>
-                  {Object.entries(skills).map(([category, skillList], idx) => (
-                    <Grid item xs={12} md={6} key={idx}>
-                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 700, mb: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{category}</Typography>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                        {skillList.map((skill, index) => (
-                          <Chip key={index} label={skill} size="small" sx={{ backgroundColor: 'rgba(255,255,255,0.03)', color: '#eaeaea', border: '1px solid rgba(255,255,255,0.1)' }} />
-                        ))}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800 }}>Technical Arsenal</Typography>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#0070f3', boxShadow: '0 0 10px #0070f3' }} />
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  {Object.entries(skills).map(([category, skillList], idx) => {
+                    const doubledList = [...skillList, ...skillList, ...skillList]; // triple for smooth loop
+                    const isReverse = idx % 2 !== 0;
+                    return (
+                      <Box key={idx}>
+                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.3)', fontWeight: 600, mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.75rem', pl: 2 }}>{category}</Typography>
+                        <div className="marquee-container">
+                          <div className={`marquee-content ${isReverse ? 'reverse' : ''}`}>
+                            {doubledList.map((skill, index) => (
+                              <Chip key={index} label={skill} sx={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#eaeaea', border: '1px solid rgba(255,255,255,0.1)', fontSize: '1rem', py: 2.5, px: 2, backdropFilter: 'blur(5px)' }} />
+                            ))}
+                          </div>
+                        </div>
                       </Box>
-                    </Grid>
-                  ))}
-                </Grid>
+                    );
+                  })}
+                </Box>
               </BentoCard>
             </Grid>
           </Grid>
@@ -169,7 +218,11 @@ const Home = () => {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {projectsData.map((project, idx) => (
               <motion.div key={project.id} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
-                <Paper sx={{ display: 'flex', flexDirection: { xs: 'column', md: idx % 2 === 0 ? 'row' : 'row-reverse' }, backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <Paper 
+                  component={motion.div}
+                  whileHover={{ y: -8, scale: 1.01 }}
+                  sx={{ display: 'flex', flexDirection: { xs: 'column', md: idx % 2 === 0 ? 'row' : 'row-reverse' }, backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '32px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}
+                >
                   <Box sx={{ width: { xs: '100%', md: '50%' } }}>
                     <Box component="img" src={`${import.meta.env.BASE_URL}${project.image.startsWith('/') ? project.image.slice(1) : project.image}`} sx={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '350px' }} />
                   </Box>
