@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "title": "Digital Menu System  (InfoSpec Systems)",
+    "description": "A full-stack, tablet-optimized digital menu application allowing restaurant patrons to browse items and place orders directly from their tables. Built robust API endpoints and responsive UI features using ASP.NET, C#, JavaScript, and Microsoft SQL Server.",
+    "image": "/images/projects/digital_menu.png",
+    "tags": ["ASP.NET", "C#", "JavaScript", "SQL Server"],
+    "link": "https://github.com/davidwxcui"
+  },
+  {
+    "id": "2",
+    "title": "Kitchen Display System  (InfoSpec Systems)",
+    "description": "A comprehensive React-based Kitchen Display System (KDS) developed for InfoSpec Systems. Features include high-speed real-time order processing, granular summary views, floor plans, and live sold-out tracking integrated with ASP.NET core systems.",
+    "image": "/images/projects/kds.png",
+    "tags": ["React", "ASP.NET", "C#", "Redux", "Data Integration"],
+    "link": "https://github.com/davidwxcui"
+  },
+  {
+    "id": "3",
+    "title": "Swype Waitlist (InfoSpec Systems)",
+    "description": "A production Android waitlist application deployed on the Google Play Store. Modernized the legacy codebase to a robust MVVM architecture utilizing ViewModel and LiveData for reactive UI updates.",
+    "image": "/images/projects/swype_waitlist.png",
+    "tags": ["Android", "Kotlin / Java", "MVVM", "LiveData"],
+    "link": "https://play.google.com/store/apps/details?id=com.profitek.wal1"
+  },
+  {
+    "id": "4",
+    "title": "Drowsiness Detection Robot",
+    "description": "DreamHack 2025 (1st Place out of 30 teams). An autonomous robot that detects user drowsiness using real-time facial recognition and eye-tracking algorithms via OpenCV. Integrated hardware controls to trigger a water spray mechanism upon detecting sleep patterns.",
+    "image": "/images/projects/project1.png",
+    "tags": ["Python", "OpenCV", "Raspberry Pi", "Computer Vision"],
+    "link": "https://github.com/davidwxcui"
+  },
+  {
+    "id": "5",
+    "title": "Social Media Clone",
+    "description": "A full-stack web application with Express.js serving a REST API and React as the frontend. Features secure user authentication, post creation, likes, comments, and real-time activity updates.",
+    "image": "/images/projects/project3.png",
+    "tags": ["MongoDB", "Express", "React", "Node.js", "Redux"],
+    "link": "https://github.com/davidwxcui"
+  },
+  {
+    "id": "6",
+    "title": "Plateful",
+    "description": "A food product search and recipe recommendation web app. Integrated a third-party API for dynamic suggestions, configured CI/CD pipelines, and led a 3-person Agile development team.",
+    "image": "/images/projects/project2.png",
+    "tags": ["React", "Git/GitHub", "CI/CD", "Agile"],
+    "link": "https://github.com/davidwxcui"
+  }
+]
