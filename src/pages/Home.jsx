@@ -6,9 +6,12 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import projectsData from '../data/projects.json';
 
-const skills = [
-  "Java", "Python", "C++", "SQL", "TypeScript", "React", "Next.js", "Node", "ASP.NET", "Docker", "AWS", "CI/CD"
-];
+const skills = {
+  "Languages": ["Java", "Python", "C", "C++", "SQL", "JavaScript/TypeScript", "HTML/CSS", "Kotlin", "C#"],
+  "Systems & Networking": ["Linux (Ubuntu)", "TCP/IP", "IP Networking", "Distributed Systems"],
+  "Frameworks & Tech": ["React", "Next.js", "Redux", "Vite/Webpack", "Node.js", "Express.js", "Flask", "ASP.NET", "RESTful APIs", "MongoDB", "SQL Databases", "UI/UX", "Component-Based Architecture", "Python/Bash Scripting"],
+  "Tools & Platforms": ["Git/GitHub", "Docker", "Postman", "AWS", "CI/CD Pipelines", "Google Test / Jest", "Microsoft SQL Server", "Android Studio", "Visual Studio", "Bitbucket", "Virtual Machines"]
+};
 
 const experiences = [
   {
@@ -138,12 +141,19 @@ const Home = () => {
             {/* Bottom: Skills */}
             <Grid item xs={12}>
               <BentoCard delay={0.4} sx={{ p: { xs: 3, md: 5 } }}>
-                <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>Technical Arsenal</Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
-                  {skills.map((skill, index) => (
-                    <Chip key={index} label={skill} sx={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#eaeaea', border: '1px solid rgba(255,255,255,0.1)', fontSize: '1rem', py: 2.5, px: 1 }} />
+                <Typography variant="h6" sx={{ mb: 4, fontWeight: 800 }}>Technical Arsenal</Typography>
+                <Grid container spacing={4}>
+                  {Object.entries(skills).map(([category, skillList], idx) => (
+                    <Grid item xs={12} md={6} key={idx}>
+                      <Typography variant="body2" sx={{ color: '#0070f3', fontWeight: 700, mb: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{category}</Typography>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                        {skillList.map((skill, index) => (
+                          <Chip key={index} label={skill} size="small" sx={{ backgroundColor: 'rgba(255,255,255,0.03)', color: '#eaeaea', border: '1px solid rgba(255,255,255,0.1)' }} />
+                        ))}
+                      </Box>
+                    </Grid>
                   ))}
-                </Box>
+                </Grid>
               </BentoCard>
             </Grid>
           </Grid>
